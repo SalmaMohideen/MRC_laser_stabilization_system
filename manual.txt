@@ -1,0 +1,70 @@
+Fort first time running the program (Using a New Computer): 
+
+1. Ensure that you plug in the controller to a free USB port and that the controller is powered on
+2. Would be best to keep the same port consistent and keep plugging it into the same port 
+3. If it is a Windows Computer you must correct the baudrate which the port settings automatically set to
+
+    Start Menu --> Device Manager --> View (3rd option on Menu Bar) -->  Ports (COM & LPT)
+    Then you will click on the device under the list of Ports 
+    Recognize which adress it has (ie: COM1, COM4 etc)
+    This address will be needed to connect to the device and should be reset as the DEFAULT_PORT_ADDRESS under the main.py file (LINE 16)
+    Right click on the correct port ---> Device properties --> Port Settings Tab
+    Then go to select Bits/Second Dropdown menu and select 1152600
+    Click OK
+    Then verify that the settings were updated for this port. 
+    Also briefly verify that DataBits = 8, Parity = One, StopBits = 1, and FlowControl = None
+4. The settings should now be correct and should remain the same each time the device is connected/disconnected
+
+
+
+
+5. Retreive the Code and open it in Visual Studio
+
+Go gitHub repository and access the download and open the code in VScode 
+gitHub link 
+
+
+6. Activte a virtual environment to run the program in. 
+
+For Windows devices, type the following command into terminal:  
+python -m venv .venv
+
+For macOS/Linux, type the following commands into the VScode terminal:
+You may need to run: -get install python3-venv 
+python3 -m venv .venv
+
+Then select yes, when asked if you want to activate the virtual environment. 
+Or manually change the interpereter to be the path of the new virtual envirnment. 
+
+For more help with activating a .venv follow the link below: 
+https://code.visualstudio.com/docs/python/
+
+7. Install pySerial in the vrtual environment
+Type the following command into the terminal and press enter:
+
+pip install pyserial
+
+
+
+Warnings/Troubleshooting:  
+
+If the device is connected but it is showing the error that device not connected please ensure that the controller is ON 
+
+If the active stabilization light is not coming on after being activated, or the active light is not one or both stages
+Then the intensity of the beam may not be enough to be recognized, this may cause out of range errors or an inability to initiate active stabilization. 
+Use the side of the detectors to lower intensity untill more than 7/10 power lights appear on the back of the detector.  
+
+If controller seems to b connected but will not send and receive commands 
+Please ensure that the port is eing opened with correct format: 
+Lines 45/46 of the serial_setup.py must be the following: 
+
+
+ser = serial.Serial(self.name, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, timeout = 1, write_timeout=1, rtscts=False, dsrdtr=False, xonxoff= True,inter_byte_timeout = 1, exclusive= None)  
+ser.baudrate = 115200 
+
+Also ensure that the port settings under the Windows Device Manager align with the above settings
+rtscts=False, dsrdtr=False indicate that Flow Control setting should be off 
+
+
+If the program stop because of a LiveStream error, please end the program and restart
+LiveStream errors may occure if the beam becomes out of range, then the data does not follow correct format and can cause errors 

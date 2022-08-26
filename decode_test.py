@@ -22,15 +22,15 @@ import struct
 import math
 
 # # \x00\x06
-# # def int_from_bytes(xbytes: bytes) -> int:
-# #     return int.from_bytes(xbytes, 'big')
+# def int_from_bytes(xbytes: bytes) -> int:
+#     return int.from_bytes(xbytes, 'big')
 
-# # print('hi', int_from_bytes(stuf) )
+# print('hi', int_from_bytes(stuf) )
 
-# # stuff = b'\x00;~~\x03\x90\x06\xfe\r2\xfa\xbe\x08i\t\xf3m\x15\xa0\x10\xd2\x12\xd5;\x00;'
-# # stuff = b'\x00;~~\x03\x92\x06\xff\r0\xfa\xb4\x08\x80\t\xe4n\x15\xa0\x10\xd2\x12\xd6;\x00;'
+# stuff = b'\x00;~~\x03\x90\x06\xfe\r2\xfa\xbe\x08i\t\xf3m\x15\xa0\x10\xd2\x12\xd5;\x00;'
+# stuff = b'\x00;~~\x03\x92\x06\xff\r0\xfa\xb4\x08\x80\t\xe4n\x15\xa0\x10\xd2\x12\xd6;\x00;'
 
-#
+
 # format = 'h'
 # stuff =  b'\x01;'
 # # stuff = b'\x00;\x01\x00;'
@@ -48,6 +48,8 @@ import math
 
 
 # stuff_S1S = b'\x00;\x06\x06\x00\x06\x00\x06\x00*\x00\xb9\xfc\x87\x01\xaa\x9d\x9bmk;'
+
+
 
 
 # format = 'xcBBhhHhhHhhc'
@@ -119,26 +121,48 @@ def bytes_to_int(bytes):
         # values_list.append(b)
 
         result = result * 256 + int(b)
-        print(result )
+       
 
     # print(values_list)
     return result
 
 
-stuffo= b'\x00;\x18\x18\x00\x06\x00\x06\x00,\x00m\x00\x00\x00w\x99\x98ry;'
+stuff2 = b'\x00;\x00\x00\xf7\x03\xfbZ\x0c\xd8\x03\xa4\x00\x00\x00\x86\x99\x99my;'
+
 
 stuff = b'\x00;\x00\x00\xf7\x01\xfbX\x0c\xd6\x03\xa5\x00\x00\x00\x88\x9a\x98oy;'
+
+
+print(list(stuff))
 stuff1 = b'\x00'
+
 stuff2 = b';'
 stuff3 = b'\x00'
 stuff4 = b'\x00'
-DX1 = b'\xf7\x01'
-DY1 = b'\xfbX\x0c'
+
+DX1 = b'\xf7'
+
+other_stuff = b'\x01'
+
+DY1 = b'\xfb'
+theX = b'X'
+print('yoyo', bytes_to_int(b'Z'))
+
+
+other_stuff_1 = b'\x0c'
+print(bytes_to_int(DY1))
+print(bytes_to_int(other_stuff_1))
+
 DI1 = b'\xd6\x03'
+print(bytes_to_int(DI1))
 DX2 = b'\xa5\x00'
+print(bytes_to_int(DX2))
 DY2 = b'\x00\x00'
+print(bytes_to_int(DY2))
 DI2 = b'\x88\x9a'
+print(bytes_to_int(DI2))
 RX1 = b'\x98oy'
+print(bytes_to_int(RX1))
 
 # stuff.encode('utf-8')
 # print(bytes_to_int(stuff))
@@ -154,6 +178,52 @@ RX1 = b'\x98oy'
 # # decode_byte (stuff)
 
 
+# def get_data():
+#         ser = serial.Serial('/dev/cu.usbserial-D308C1SJ', bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, timeout = 1, write_timeout=1, rtscts=False, dsrdtr=False, xonxoff= True,inter_byte_timeout = 1, exclusive= None)  # open serial port
+#         ser.baudrate = 115200 
+#         ser.write(bytes(('S1S;'.encode())))
+#         reading_new = bytes(ser.read_until())
+#         print(reading_new)
+
+
+# def produce_data(running):
+#     sleep_time = 1//int(input ('Please enter: \n  1. 1 shot/second \n  2. 2 shots/second'))
+    
+#     while running == True :
+#         get_data()
+#         time.sleep(sleep_time)
 
 
 
+
+# print (int.from_bytes(stuff, "big"))
+
+
+# for b in stuff: 
+#     print (bytes(b))
+
+# print(stuff[2:4])
+
+
+# byte_string = str(stuff)
+
+# byte_string = byte_string[7:len(byte_string)-2]
+# print(byte_string)
+
+# byte_string[2]
+
+# print(stuff[4:6])
+
+
+
+# stuff = b'\x00;\x00\x00\xf7\x01\xfbX\x0c\xd6\x03\xa5\x00\x00\x00\x88\x9a\x98oy;'
+
+# stuff = b'\x00;\x06\x06\x00\x06\x00\x06\x00*\x00\xb9\xfc\x87\x01\xaa\x9d\x9bmk;'
+# stuff = b'\x00;\x00\x00\x00\x06\x00\x06\x006\x00z\x00\x00\x00y\x98\x98ry;'
+
+# stuff = b'\x00;\x06\x06\x00\x06\x00\x06\x00*\x00\xb2\xfc\xbb\x01\xc5\x9b\x99jl;'
+
+# stuff = b'\x00;\x18\x18\xeck\xfa\xce\x01\xb2\x00A\x00\x00\x00y\x9a\x99qy;'
+# print(decode_byte_to_ints(stuff)) 
+
+# why is the last two bits not being able to be recognized 

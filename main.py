@@ -1,35 +1,12 @@
 # this main file will call other classes and manage communication with the controller
-from ast import arg
-from multiprocessing.synchronize import Condition
-from tkinter import EXCEPTION
 from serial_setup import serial_operations
 import on_off_active_stabilization
 from live_stream import live_stream
-import threading
-from threading import Condition
-import test 
-import time 
 import serial
 
 # default port address will automatically be connected to at the start of the program 
 # user can change the default port adress by entering one and connecting to a different port 
 DEFUALT_PORT_ADDRESS = '/dev/cu.usbserial-D308C1SJ'
-
-def get_data():
-        ser = serial.Serial('/dev/cu.usbserial-D308C1SJ', bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, timeout = 1, write_timeout=1, rtscts=False, dsrdtr=False, xonxoff= True,inter_byte_timeout = 1, exclusive= None)  # open serial port
-        ser.baudrate = 115200 
-        ser.write(bytes(('S1S;'.encode())))
-        reading_new = bytes(ser.read_until())
-        print(reading_new)
-
-
-def produce_data(running):
-    sleep_time = 1//int(input ('Please enter: \n  1. 1 shot/second \n  2. 2 shots/second'))
-    
-    while running == True :
-        get_data()
-        time.sleep(sleep_time)
-
 
 def main():
     
@@ -40,6 +17,7 @@ def main():
         my_serial.transmission_status = True 
         my_serial.receiving_status = True 
         ser = my_serial.open_port()
+        print("opened port ")
 
     except serial.SerialException as e: 
         # if the default device can't be found, then an error will be printed 
@@ -82,9 +60,20 @@ def main():
 
                 # allows the user to turn on the data live stream 
                 elif menu_input == '4':
-                    # live_stream = test()
+                    stream = live_stream()
                     ser.close()
-                    live_stream.start_stream(ser, True)
+                    stream.file_title = stream.make_file_title()
+                    stream.make_file(stream.file_title)
+                    stream.produce_data(ser, True, stream.file_title)
+                    # t1 = Thread(target=main)
+                    # t2 = Thread(target=stream.produce_data, args=(ser, True, stream.file_title))
+                    
+                    # t1.start()
+                    # t2.start()
+                    
+                    # print(decode_byte_to_ints(stuff))
+                    # stream.start_stream(ser, True)
+                    # stream.produce_data()
                     
                 # allows the user to turn off a data live stream
                 elif menu_input == '5':
